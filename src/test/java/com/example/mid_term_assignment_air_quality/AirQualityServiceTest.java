@@ -43,7 +43,9 @@ public class AirQualityServiceTest {
         Mockito.when(cache.getCacheMemory()).thenReturn(cache_memory);
         Mockito.when(cache.getStatistics()).thenReturn(statistics);
         Mockito.when(cache.getCityAirQuality("Aveiro")).thenReturn(aveiro);
+        Mockito.when(cache.getCoordinatesAirQuality("40.64427","-8.64554")).thenReturn(aveiro);
         Mockito.when(cache.getCityAirQuality("xxxx")).thenReturn(new AirQuality(0,"error","","", new AirQualityData[]{}));
+        Mockito.when(cache.getCoordinatesAirQuality("200","200")).thenReturn(new AirQuality(0,"error","","", new AirQualityData[]{}));
 
     }
     @Test
@@ -68,8 +70,37 @@ public class AirQualityServiceTest {
     }
 
     @Test
+    public void whenValidCoordinates_thenAirQualityReturned() {
+        AirQuality airQualityAveiro = airQualityService.getCoordinatesAirQuality(40.64427,-8.64554);
+        AirQualityData data = airQualityAveiro.getData()[0];
+        assertEquals(airQualityAveiro.getData().length,1);
+        assertEquals("Aveiro",airQualityAveiro.getCity_name());
+        assertEquals("40.64427",airQualityAveiro.getLat());
+        assertEquals("-8.64554",airQualityAveiro.getLon());
+        assertEquals(1.2, data.getAqi());
+        assertEquals(2.1, data.getO3());
+        assertEquals(3.1, data.getCo());
+        assertEquals(1.0, data.getSo2());
+        assertEquals(2.1, data.getNo2());
+        assertEquals(2.0, data.getPm25());
+        assertEquals(3.0, data.getPm10());
+        assertEquals(1, data.getPollen_level_tree());
+        assertEquals(2, data.getPollen_level_grass());
+        assertEquals(1, data.getPollen_level_weed());
+        assertEquals(1, data.getMold_level());
+    }
+
+    @Test
     public void whenInvalidCity_thenAirQualityErrorReturned() {
         AirQuality airQualityx = airQualityService.getCityAirQuality("xxxx");
+        assertEquals(airQualityx.getData().length,0);
+        assertEquals("error",airQualityx.getCity_name());
+        assertEquals("",airQualityx.getLat());
+        assertEquals("",airQualityx.getLon());
+    }
+    @Test
+    public void whenInvalidCoordinates_thenAirQualityErrorReturned() {
+        AirQuality airQualityx = airQualityService.getCoordinatesAirQuality(200,200);
         assertEquals(airQualityx.getData().length,0);
         assertEquals("error",airQualityx.getCity_name());
         assertEquals("",airQualityx.getLat());

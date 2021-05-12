@@ -49,6 +49,7 @@ public class AirQualityRestControllerTest {
         verify(airQualityService, times(1)).getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble());
     }
 
+
     @Test
     public void getAirQualityInvalidCity_Test() throws Exception{
         given(airQualityService.getCityAirQuality(Mockito.anyString())).willReturn(new AirQuality(0,"error","","", new AirQualityData[]{}));
@@ -61,9 +62,16 @@ public class AirQualityRestControllerTest {
 
     }
 
+
     @Test
     public void getAirQualityInvalidCoordinates_Test() throws Exception{
-
+        given(airQualityService.getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble())).willReturn(new AirQuality(0,"error","","", new AirQualityData[]{}));
+        mvc.perform(MockMvcRequestBuilders.get("/api/airquality/coordinates/"+200+","+200))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("city_name").value("error"))
+                .andExpect(jsonPath("lat").value(""))
+                .andExpect(jsonPath("lon").value(""));
+        verify(airQualityService, times(1)).getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble());
 
     }
 

@@ -87,7 +87,7 @@ public class AirQualityService {
         //Different coordinates can give the same city (more recent result) but not by a long difference
         String lat_string=String.valueOf(Math.round(lat*1e5)/1e5);
         String lon_string=String.valueOf(Math.round(lon*1e5)/1e5);
-        if (!cache.isValidCordinates(lat_string, lon_string)) {
+        if (!cache.isValidCoordinates(lat_string, lon_string)) {
             logger.log(Level.INFO, "ACCESSING EXTERNAL SOURCE");
 
             RestTemplate restTemplate = new RestTemplate();
@@ -105,8 +105,8 @@ public class AirQualityService {
             location_airQuality.setLon(lon_string);
             location_airQuality.setLat(lat_string);
 
-            //Verifying return data
-            if (location_airQuality != null) {
+            //Verifying return data and check lat and lon values
+            if (location_airQuality != null & (lat<90.00000 & lat >-90.00000 & lon <180.00000 & lon >-180.00000 )  ) {
                 logger.log(Level.WARNING, "VALID COORDINATES");
                 cache.setMiss();
                 location_airQuality.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());

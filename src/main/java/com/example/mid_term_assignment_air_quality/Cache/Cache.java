@@ -65,7 +65,7 @@ public class Cache {
         return (cache_memory.containsKey(city) && currentTime - cache_memory.get(city).getTimestamp() < 600000);
     }
 
-    public boolean isValidCordinates(String lat, String lon) {
+    public boolean isValidCoordinates(String lat, String lon) {
         long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
         for (AirQuality x : cache_memory.values()) {
             if (x.getLat().equals(lat) && x.getLon().equals(lon)) {
