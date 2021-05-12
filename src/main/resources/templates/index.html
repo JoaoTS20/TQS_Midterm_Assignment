@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        function submitForm() {
+            var selectedOption = document.getElementById("type_form"); // the <select> is assigned to the variable using its id
+
+            window.location = "?city=" + selectedOption.value; // here we concat the url with the selected  option and assign it to the action of the form
+        }
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title th:if="${selected}" th:text="${airQuality.city_name}"></title>
+    <title th:unless="${selected}">Air Quality</title>
+</head>
+
+<body>
+
+<div class="container" style="padding-top: 20px">
+
+    <div class="col-md-3">
+        <select  class="form-control  mb-3 btn btn-default dropdown-toggle "  style="border-color: dodgerblue" id="type_form" name="id_type">
+            <option disabled="disabled" selected="selected" value="0">Select City</option>
+            <option th:each="data: ${locations}" th:value="${data}"  th:text="${data}"></option>
+            <option value="Arouca">Arouca</option>
+        </select>
+        <button style="font-size: 14px; font-weight: bolder;" class="btn btn-primary btn-lg" onclick="submitForm()"> Get Air Quality </button> <!--this will call the submitForm() javascript function given below -->
+    </div>
+    <div th:if="${selected}" class="col-md-8" style="padding-top: 20px">
+        <h3 th:text="${airQuality.city_name}"></h3>
+        <p th:inline="text">Latitude: [[${airQuality.lat}]]</p>
+        <p th:inline="text">Longitude: [[${airQuality.lon}]]</p>
+        <hr>
+        <small style="font-weight: bolder">(0 = None, 1 = Low, 2 = Moderate, 3 = High, 4 = Very High)</small>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Air Quality Index [US - EPA standard 0 - +500]</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].aqi}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Concentration of surface O3 (µg/m³)</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].o3}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Concentration of surface SO2 (µg/m³)</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].so2}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Concentration of surface NO2 (µg/m³)</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].no2}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Concentration of carbon monoxide (µg/m³)</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].co}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Concentration of particulate matter < 2.5 microns (µg/m³)</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].pm25}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Concentration of particulate matter < 10 microns (µg/m³)</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].pm10}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Tree pollen level</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].pollen_level_tree}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Grass pollen level</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].pollen_level_grass}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Weed pollen level</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].pollen_level_weed}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h6 class="mb-0">Mold level</h6>
+                    </div>
+                    <div th:text="${airQuality.data[0].mold_level}" class="col-sm-5 text-secondary">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+</div>
+</body>
+
+</html>
