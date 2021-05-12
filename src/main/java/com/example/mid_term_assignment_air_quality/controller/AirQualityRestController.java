@@ -32,7 +32,6 @@ public class AirQualityRestController {
     }
 
 
-    //Verificar imcompatibilidades mas parece funcionar
     @GetMapping("/coordinates/{latitude},{longitude}")
     public AirQuality getCityAirQuality(@PathVariable(value = "latitude") double latitude,@PathVariable(value = "longitude") double longitude) {
         return airQualityService.getCoordinatesAirQuality(latitude,longitude);

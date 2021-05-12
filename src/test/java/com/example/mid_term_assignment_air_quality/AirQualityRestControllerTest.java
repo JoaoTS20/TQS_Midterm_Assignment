@@ -40,11 +40,11 @@ public class AirQualityRestControllerTest {
 
     @Test
     public void getAirQualityCoordinates_Test() throws Exception{
-        given(airQualityService.getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble())).willReturn(new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"city","2.46","21.01", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)}));
-        mvc.perform(MockMvcRequestBuilders.get("/api/airquality/coordinates/"+2.458+","+21.01))
+        given(airQualityService.getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble())).willReturn(new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"city","41.14961","-8.61099", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)}));
+        mvc.perform(MockMvcRequestBuilders.get("/api/airquality/coordinates/"+41.149612+","+21.01))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("lat").value("2.46"))
-                .andExpect(jsonPath("lon").value("21.01"))
+                .andExpect(jsonPath("lat").value("41.14961"))
+                .andExpect(jsonPath("lon").value("-8.61099"))
                 .andExpect(jsonPath("data[0].pm10").value(3.0));
         verify(airQualityService, times(1)).getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble());
     }

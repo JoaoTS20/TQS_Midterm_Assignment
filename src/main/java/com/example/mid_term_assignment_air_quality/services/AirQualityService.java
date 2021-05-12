@@ -77,13 +77,16 @@ public class AirQualityService {
         }
     }
 
-    //Get Air Quality from a City
+    //Get Air Quality from Coordinates
     public AirQuality getCoordinatesAirQuality(double lat, double lon) {
         //If not present in the Cache or not respecting the  time-to-live policy
         logger.log(Level.INFO, "CHECKING CACHE");
-        String lat_string=String.valueOf(Math.round(lat*100.0)/100.0);
-        String lon_string=String.valueOf(Math.round(lon*100.0)/100.0);
 
+        //Makes 5 decimal places a standard
+        //This will allow every coordinates work better with Cache
+        //Different coordinates can give the same city (more recent result) but not by a long difference
+        String lat_string=String.valueOf(Math.round(lat*1e5)/1e5);
+        String lon_string=String.valueOf(Math.round(lon*1e5)/1e5);
         if (!cache.isValidCordinates(lat_string, lon_string)) {
             logger.log(Level.INFO, "ACCESSING EXTERNAL SOURCE");
 
@@ -96,6 +99,11 @@ public class AirQualityService {
 
             //Getting data
             AirQuality location_airQuality = restTemplate.getForObject(completeUrl, AirQuality.class);
+
+            //Need to do this because External API when getting by coordinates returns with 2 decimal places
+            //But when getting by city returns with 5 decimal places
+            location_airQuality.setLon(lon_string);
+            location_airQuality.setLat(lat_string);
 
             //Verifying return data
             if (location_airQuality != null) {
