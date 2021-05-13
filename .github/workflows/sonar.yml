@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK
@@ -13,8 +13,6 @@ jobs:
         with:
           java-version: '11'
       - name: Analyze with SonarCloud
-        before_install:
-          - chmod +x mvnw
         run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=JoaoTS20_TQS_Midterm_Assignment -Dsonar.organization=joaots20 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
