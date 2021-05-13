@@ -26,6 +26,7 @@ public class Cache {
 
 
     public Cache() {
+        //Empty Constructor to initiate Cache
     }
 
     // Returns some basic statistics about its operation (count of requests, hits/misses) and Cities in the Memory
