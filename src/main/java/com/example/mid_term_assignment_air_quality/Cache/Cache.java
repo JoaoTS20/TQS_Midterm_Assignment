@@ -36,11 +36,9 @@ public class Cache {
         return statistics;
     }
 
-    public void setMiss() {
-        miss++;
-    }
+    public synchronized void  setMiss() { miss++; }
 
-    public void setHit() {
+    public synchronized void setHit() {
         hit++;
     }
 
@@ -108,7 +106,7 @@ public class Cache {
         return cache_memory;
     }
 
-    public void reset(){
+    public synchronized void reset(){
         getCacheMemory().clear();
         hit=0;
         miss=0;
