@@ -2,12 +2,9 @@ package com.example.mid_term_assignment_air_quality.Cache;
 
 import com.example.mid_term_assignment_air_quality.entities.AirQuality;
 import com.example.mid_term_assignment_air_quality.entities.AirQualityData;
-import com.example.mid_term_assignment_air_quality.services.AirQualityService;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
