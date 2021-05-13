@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-public class AirQualityRestControllerTest {
+ class AirQualityRestControllerTest {
     @Autowired
     MockMvc mvc;
 
@@ -29,7 +29,7 @@ public class AirQualityRestControllerTest {
     AirQualityService airQualityService;
 
     @Test
-    public void getAirQualityCity_Test() throws Exception{
+     void getAirQualityCity_Test() throws Exception{
         given(airQualityService.getCityAirQuality(Mockito.anyString())).willReturn(new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"city","2","1", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)}));
         mvc.perform(MockMvcRequestBuilders.get("/api/airquality/city/city"))
                 .andExpect(status().isOk())
@@ -39,7 +39,7 @@ public class AirQualityRestControllerTest {
     }
 
     @Test
-    public void getAirQualityCoordinates_Test() throws Exception{
+     void getAirQualityCoordinates_Test() throws Exception{
         given(airQualityService.getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble())).willReturn(new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"city","41.14961","-8.61099", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)}));
         mvc.perform(MockMvcRequestBuilders.get("/api/airquality/coordinates/"+41.149612+","+21.01))
                 .andExpect(status().isOk())
@@ -51,7 +51,7 @@ public class AirQualityRestControllerTest {
 
 
     @Test
-    public void getAirQualityInvalidCity_Test() throws Exception{
+     void getAirQualityInvalidCity_Test() throws Exception{
         given(airQualityService.getCityAirQuality(Mockito.anyString())).willReturn(new AirQuality(0,"error","","", new AirQualityData[]{}));
         mvc.perform(MockMvcRequestBuilders.get("/api/airquality/city/fake"))
                 .andExpect(status().isOk())
@@ -64,7 +64,7 @@ public class AirQualityRestControllerTest {
 
 
     @Test
-    public void getAirQualityInvalidCoordinates_Test() throws Exception{
+     void getAirQualityInvalidCoordinates_Test() throws Exception{
         given(airQualityService.getCoordinatesAirQuality(Mockito.anyDouble(),Mockito.anyDouble())).willReturn(new AirQuality(0,"error","","", new AirQualityData[]{}));
         mvc.perform(MockMvcRequestBuilders.get("/api/airquality/coordinates/"+200+","+200))
                 .andExpect(status().isOk())
@@ -76,7 +76,7 @@ public class AirQualityRestControllerTest {
     }
 
     @Test
-    public void getCache_Test() throws Exception{
+     void getCache_Test() throws Exception{
         Map<String, AirQuality> cache_memory = new HashMap<>();
         cache_memory.put("porto", new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"porto","-6.90","42.17", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)}));
         given(airQualityService.getCache()).willReturn(cache_memory);
@@ -90,7 +90,7 @@ public class AirQualityRestControllerTest {
     }
 
     @Test
-    public void getStatistics_Test() throws Exception{
+     void getStatistics_Test() throws Exception{
         Set<String> set = new HashSet<>(Arrays.asList("Porto", "Aveiro", "Coimbra"));
         HashMap<String, String> statistics = new HashMap<>();
         statistics.put("hit", "5");

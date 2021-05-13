@@ -18,17 +18,17 @@ import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class WebInterfaceSeleniumTest {
+ class WebInterfaceSeleniumTest {
     private WebDriver driver;
     private Map<String, Object> vars;
     JavascriptExecutor js;
 
-    @After
+    @AfterEach
     public void tearDown() {
         driver.quit();
     }
     @Test
-    public void WebInterfaceTest() {
+     void WebInterfaceTest() {
         driver = new ChromeDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();

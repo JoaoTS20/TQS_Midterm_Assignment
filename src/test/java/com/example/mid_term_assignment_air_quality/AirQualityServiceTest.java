@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class AirQualityServiceTest {
+ class AirQualityServiceTest {
 
     @Mock(lenient = true)
     private Cache cache;
@@ -49,10 +49,10 @@ public class AirQualityServiceTest {
 
     }
     @Test
-    public void whenValidCity_thenAirQualityReturned() {
+     void whenValidCity_thenAirQualityReturned() {
         AirQuality airQualityAveiro = airQualityService.getCityAirQuality("Aveiro");
         AirQualityData data = airQualityAveiro.getData()[0];
-        assertEquals(airQualityAveiro.getData().length,1);
+        assertEquals(1,airQualityAveiro.getData().length);
         assertEquals("Aveiro",airQualityAveiro.getCity_name());
         assertEquals("40.64427",airQualityAveiro.getLat());
         assertEquals("-8.64554",airQualityAveiro.getLon());
@@ -70,10 +70,10 @@ public class AirQualityServiceTest {
     }
 
     @Test
-    public void whenValidCoordinates_thenAirQualityReturned() {
+     void whenValidCoordinates_thenAirQualityReturned() {
         AirQuality airQualityAveiro = airQualityService.getCoordinatesAirQuality(40.64427,-8.64554);
         AirQualityData data = airQualityAveiro.getData()[0];
-        assertEquals(airQualityAveiro.getData().length,1);
+        assertEquals(1,airQualityAveiro.getData().length);
         assertEquals("Aveiro",airQualityAveiro.getCity_name());
         assertEquals("40.64427",airQualityAveiro.getLat());
         assertEquals("-8.64554",airQualityAveiro.getLon());
@@ -91,24 +91,24 @@ public class AirQualityServiceTest {
     }
 
     @Test
-    public void whenInvalidCity_thenAirQualityErrorReturned() {
+     void whenInvalidCity_thenAirQualityErrorReturned() {
         AirQuality airQualityx = airQualityService.getCityAirQuality("xxxx");
-        assertEquals(airQualityx.getData().length,0);
+        assertEquals(0,airQualityx.getData().length);
         assertEquals("error",airQualityx.getCity_name());
         assertEquals("",airQualityx.getLat());
         assertEquals("",airQualityx.getLon());
     }
     @Test
-    public void whenInvalidCoordinates_thenAirQualityErrorReturned() {
+     void whenInvalidCoordinates_thenAirQualityErrorReturned() {
         AirQuality airQualityx = airQualityService.getCoordinatesAirQuality(200,200);
-        assertEquals(airQualityx.getData().length,0);
+        assertEquals(0,airQualityx.getData().length);
         assertEquals("error",airQualityx.getCity_name());
         assertEquals("",airQualityx.getLat());
         assertEquals("",airQualityx.getLon());
     }
 
     @Test
-    public void givenStatistics_whenGetStatistics_thenReturnValues() {
+     void givenStatistics_whenGetStatistics_thenReturnValues() {
         Set<String> set = new HashSet<>(Arrays.asList("Porto", "Aveiro", "Coimbra"));
         int miss = 3;
         int hit = 5;
@@ -121,7 +121,7 @@ public class AirQualityServiceTest {
     }
 
     @Test
-    public void givenMemory_Cache_whenGetCache_thenReturn() {
+     void givenMemory_Cache_whenGetCache_thenReturn() {
         String city0 ="Porto";
         String city1 = "Coimbra";
         String city2 = "Aveiro";

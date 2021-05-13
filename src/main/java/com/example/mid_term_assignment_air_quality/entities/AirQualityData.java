@@ -118,20 +118,4 @@ public class AirQualityData {
         this.mold_level = mold_level;
     }
 
-    @Override
-    public String toString() {
-        return "AirQualityData{" +
-                "aqi=" + aqi +
-                ", o3=" + o3 +
-                ", co=" + co +
-                ", so2=" + so2 +
-                ", no2=" + no2 +
-                ", pm25=" + pm25 +
-                ", pm10=" + pm10 +
-                ", pollen_level_tree=" + pollen_level_tree +
-                ", pollen_level_grass=" + pollen_level_grass +
-                ", pollen_level_weed=" + pollen_level_weed +
-                ", mold_level" + mold_level +
-                '}';
-    }
 }

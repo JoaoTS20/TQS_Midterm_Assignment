@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class CacheTest {
+ class CacheTest {
 
     protected Cache cache;
 
@@ -30,7 +30,7 @@ public class CacheTest {
     }
 
     @Test
-    public void getCityAirQuality_Test() {
+     void getCityAirQuality_Test() {
         AirQuality aveiro_airquality = new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"Aveiro","40.64427","-8.64554", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)});
         cache.saveCityAirQuality("Aveiro", aveiro_airquality);
         AirQuality returned = cache.getCityAirQuality("Aveiro");
@@ -41,7 +41,7 @@ public class CacheTest {
     }
 
     @Test
-    public void getCoordinatesAirQuality_Test() {
+     void getCoordinatesAirQuality_Test() {
         AirQuality aveiro_airquality = new AirQuality(new Timestamp(System.currentTimeMillis()).getTime(),"Aveiro","40.64427","-8.64554", new AirQualityData[]{new AirQualityData(1.2,2.1,3.1,1.0,2.1,2.0,3.0,1,2,1,1)});
         cache.saveCityAirQuality(aveiro_airquality.getCity_name(), aveiro_airquality);
         AirQuality returned = cache.getCoordinatesAirQuality("40.64427","-8.64554");
@@ -52,7 +52,7 @@ public class CacheTest {
     }
 
     @Test
-    public void saveCityAirQuality_Test() {
+     void saveCityAirQuality_Test() {
         String city1 = "Braga";
         String city2 = "Aveiro";
         AirQuality air = new AirQuality();
@@ -66,7 +66,7 @@ public class CacheTest {
                 .containsValues(air,air2);
     }
     @Test
-    public void isValidCityFalse_Test() {
+     void isValidCityFalse_Test() {
         //Not in Cache
         boolean validVerification = cache.isValidCity("city");
         assertEquals(false,cache.getCacheMemory().containsKey("city"));
@@ -84,7 +84,7 @@ public class CacheTest {
     }
 
     @Test
-    public void isValidCoordinatesFalse_Test(){
+     void isValidCoordinatesFalse_Test(){
         //Not in Cache
         boolean validVerification = cache.isValidCoordinates("2","2");
         boolean compare =false;
@@ -109,7 +109,7 @@ public class CacheTest {
 
 
     @Test
-    public void isValidCityTrue_Test() {
+     void isValidCityTrue_Test() {
         //In Cache and respecting time-to-live policy
         long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
         AirQuality air = new AirQuality();
@@ -128,7 +128,7 @@ public class CacheTest {
     }
 
     @Test
-    public void isValidCoordinatesTrue_Test(){
+     void isValidCoordinatesTrue_Test(){
 
         long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
         AirQuality air = new AirQuality();

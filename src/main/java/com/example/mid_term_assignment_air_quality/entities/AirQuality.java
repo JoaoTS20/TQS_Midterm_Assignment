@@ -1,7 +1,5 @@
 package com.example.mid_term_assignment_air_quality.entities;
 
-import java.util.Arrays;
-
 public class AirQuality {
     private long timestamp;
     private String city_name;
@@ -61,14 +59,4 @@ public class AirQuality {
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        return "AirQuality{" +
-                "timestamp=" + timestamp +
-                ", city_name='" + city_name + '\'' +
-                ", lat='" + lat + '\'' +
-                ", lon='" + lon + '\'' +
-                ", data=" + data.toString() +
-                '}';
-    }
 }

@@ -45,15 +45,15 @@ public class AirQualityService {
         if (!cache.isValidCity(city.toLowerCase())) {
             logger.log(Level.INFO, "ACCESSING EXTERNAL SOURCE");
 
-            RestTemplate restTemplate = new RestTemplate();
+            var restTemplate = new RestTemplate();
 
             //Making Complete URL to access External API
             String completeUrl = URL + "city=" + city + KEY;
 
-            logger.log(Level.INFO, "URL:" + completeUrl);
+            logger.log(Level.INFO, "URL: {0}", completeUrl);
 
             //Getting data
-            AirQuality location_airQuality = restTemplate.getForObject(completeUrl, AirQuality.class);
+            var location_airQuality = restTemplate.getForObject(completeUrl, AirQuality.class);
 
             //Verifying return data
             if (location_airQuality != null) {
@@ -63,11 +63,12 @@ public class AirQualityService {
                 this.saveAirQuality(city, location_airQuality);
                 return cache.getCityAirQuality(city);
             }
-            else
+            else {
                 // If not present in the external source
                 logger.log(Level.WARNING, "INVALID CITY");
                 logger.log(Level.INFO, "RETURNING NULL OBJECT");
-                return new AirQuality(0,"error","","", new AirQualityData[]{});
+                return new AirQuality(0, "error", "", "", new AirQualityData[]{});
+            }
         }
         //If present in the Cache AND respecting the time-to-live policy
         else {
@@ -85,39 +86,41 @@ public class AirQualityService {
         //Makes 5 decimal places a standard
         //This will allow every coordinates work better with Cache
         //Different coordinates can give the same city (more recent result) but not by a long difference
-        String lat_string=String.valueOf(Math.round(lat*1e5)/1e5);
-        String lon_string=String.valueOf(Math.round(lon*1e5)/1e5);
+        var lat_string=String.valueOf(Math.round(lat*1e5)/1e5);
+        var lon_string=String.valueOf(Math.round(lon*1e5)/1e5);
         if (!cache.isValidCoordinates(lat_string, lon_string)) {
             logger.log(Level.INFO, "ACCESSING EXTERNAL SOURCE");
 
-            RestTemplate restTemplate = new RestTemplate();
+            var restTemplate = new RestTemplate();
 
             //Making Complete URL to access External API
             String completeUrl = URL + "lat="+lat_string +"&lon="+ lon_string + KEY;
 
-            logger.log(Level.INFO, "URL:" + completeUrl);
+            logger.log(Level.INFO, "URL: {0}", completeUrl);
 
             //Getting data
-            AirQuality location_airQuality = restTemplate.getForObject(completeUrl, AirQuality.class);
+            var location_airQuality = restTemplate.getForObject(completeUrl, AirQuality.class);
 
             //Need to do this because External API when getting by coordinates returns with 2 decimal places
             //But when getting by city returns with 5 decimal places
-            location_airQuality.setLon(lon_string);
-            location_airQuality.setLat(lat_string);
-
+            if(location_airQuality!= null) {
+                location_airQuality.setLon(lon_string);
+                location_airQuality.setLat(lat_string);
+            }
             //Verifying return data and check lat and lon values
-            if (location_airQuality != null & (lat<90.00000 & lat >-90.00000 & lon <180.00000 & lon >-180.00000 )  ) {
+            if (location_airQuality != null && (lat<90.00000 && lat >-90.00000 && lon <180.00000 && lon >-180.00000 )  ) {
                 logger.log(Level.WARNING, "VALID COORDINATES");
                 cache.setMiss();
                 location_airQuality.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());
                 this.saveAirQuality(location_airQuality.getCity_name(), location_airQuality);
                 return cache.getCityAirQuality(location_airQuality.getCity_name());
             }
-            else
+            else {
                 // If not present in the external source
                 logger.log(Level.WARNING, "INVALID COORDINATES");
                 logger.log(Level.INFO, "RETURNING NULL OBJECT");
-                return new AirQuality(0,"error","","", new AirQualityData[]{});
+                return new AirQuality(0, "error", "", "", new AirQualityData[]{});
+            }
         }
         //If present in the Cache AND respecting the time-to-live policy
         else {

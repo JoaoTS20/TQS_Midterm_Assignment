@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.BDDMockito.given;
 
 @WebMvcTest(AirQualityController.class)
-public class AirQualityControllerTest {
+ class AirQualityControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -31,7 +31,7 @@ public class AirQualityControllerTest {
     }
 
     @Test
-    public void home__test() throws Exception {
+     void home__test() throws Exception {
         RestAssuredMockMvc.given().auth().none().when().get("").then()
                 .log().all().statusCode(200)
                 .contentType(ContentType.HTML)
