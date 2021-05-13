@@ -30,7 +30,7 @@ public class Cache {
     }
 
     // Returns some basic statistics about its operation (count of requests, hits/misses) and Cities in the Memory
-    public Map getStatistics() {
+    public Map<String,String> getStatistics() {
         this.setHit();
         Map<String, String> statistics = new HashMap<>();
         statistics.put("miss", String.valueOf(miss));
